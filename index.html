@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="خطة أحمد">
+<title>خطة أحمد 2026</title>
+<style>
+:root{
+  --bg:#f5f4f0;--card:#fff;--border:#e6e4de;--text:#181816;--muted:#888;--faint:#eeede8;
+  --green:#1D9E75;--green-bg:#E1F5EE;--green-dk:#0F6E56;
+  --blue:#185FA5;--blue-bg:#E6F1FB;
+  --amber:#BA7517;--amber-bg:#FAEEDA;
+  --red:#A32D2D;--red-bg:#FCEBEB;
+  --purple:#3C3489;--purple-bg:#EEEDFE;
+  --gray:#5F5E5A;--gray-bg:#F1EFE8;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{font-family:-apple-system,system-ui,sans-serif;direction:rtl;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;overscroll-behavior:none}
+.topbar{background:var(--text);color:#fff;padding:.85rem 1rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.topbar-title{font-size:15px;font-weight:500}
+.topbar-sub{font-size:10px;opacity:.5}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
+.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:.5rem .25rem;cursor:pointer;color:var(--muted);font-size:10px;gap:2px;border:none;background:none;font-family:inherit}
+.bnav-item.active{color:var(--text)}
+.bnav-icon{font-size:20px;line-height:1}
+.container{max-width:600px;margin:0 auto;padding:.85rem .85rem 85px}
+.page{display:none}.page.active{display:block}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem 1.1rem;margin-bottom:.85rem}
+.card-title{font-size:13px;font-weight:600;margin-bottom:.8rem;display:flex;justify-content:space-between;align-items:center}
+.metrics-2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:.85rem}
+.metric{background:var(--faint);border-radius:10px;padding:.75rem .9rem}
+.metric-label{font-size:10px;color:var(--muted);margin-bottom:3px}
+.metric-value{font-size:17px;font-weight:600}
+.metric-sub{font-size:10px;color:#bbb;margin-top:1px}
+.tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:600;white-space:nowrap}
+.tg{background:var(--green-bg);color:var(--green-dk)}
+.tb{background:var(--blue-bg);color:var(--blue)}
+.ta{background:var(--amber-bg);color:var(--amber)}
+.tr{background:var(--red-bg);color:var(--red)}
+.tp{background:var(--purple-bg);color:var(--purple)}
+.tgr{background:var(--gray-bg);color:var(--gray)}
+.cg{color:var(--green)!important}.ca{color:var(--amber)!important}
+.cr{color:var(--red)!important}.cb{color:var(--blue)!important}.cp{color:var(--purple)!important}
+.row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--faint);font-size:13px}
+.row:last-child{border-bottom:none}
+.alert{border-radius:10px;padding:.7rem 1rem;font-size:12px;line-height:1.7;margin-bottom:8px}
+.ag{background:var(--green-bg);color:var(--green-dk);border:1px solid #9FE1CB}
+.aw{background:var(--amber-bg);color:var(--amber);border:1px solid #FAC775}
+.ai{background:var(--blue-bg);color:var(--blue);border:1px solid #B5D4F4}
+.ap{background:var(--purple-bg);color:var(--purple);border:1px solid #CECBF6}
+.ar{background:var(--red-bg);color:var(--red);border:1px solid #F7C1C1}
+.prog{margin-bottom:10px}
+.prog-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px}
+.prog-bg{height:9px;background:var(--faint);border-radius:5px;overflow:hidden}
+.prog-fill{height:100%;border-radius:5px;transition:width .5s}
+.tip{background:var(--faint);border-radius:10px;padding:.75rem 1rem;font-size:12px;color:var(--muted);line-height:1.7}
+.divider{font-size:10px;font-weight:600;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:4px;margin:10px 0 8px;letter-spacing:.05em}
+.inp-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--faint);font-size:13px}
+.inp-row:last-child{border-bottom:none}
+.iname{flex:1;line-height:1.3}
+.isub{font-size:10px;color:var(--muted);display:block}
+.inp{width:82px;padding:6px 8px;border:1px solid var(--border);border-radius:8px;background:var(--faint);color:var(--text);font-size:13px;font-family:inherit;text-align:center}
+.inp:focus{outline:none;border-color:var(--text);background:var(--card)}
+.iresult{width:72px;text-align:left;font-weight:600;font-size:12px;color:var(--muted);flex-shrink:0}
+.chart-wrap{position:relative;width:100%;height:220px}
+.recur-item{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--faint);font-size:13px}
+.recur-item:last-child{border-bottom:none}
+.recur-del{background:none;border:none;color:#ddd;font-size:20px;cursor:pointer;padding:0 4px;line-height:1}
+.recur-del:active{color:var(--red)}
+.inp-label{font-size:10px;color:var(--muted);margin-bottom:3px;display:block}
+.inp-full{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);font-size:14px;font-family:inherit}
+.inp-full:focus{outline:none;border-color:var(--text)}
+.btn-add{width:100%;padding:10px;border-radius:10px;border:none;background:var(--text);color:#fff;font-size:14px;font-family:inherit;font-weight:500;cursor:pointer;margin-top:8px}
+.add-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.phase{border:1px solid var(--border);border-radius:14px;padding:.9rem 1rem;margin-bottom:.85rem}
+.phase-head{display:flex;align-items:center;gap:10px;margin-bottom:.5rem}
+.phase-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;flex-shrink:0}
+.phase-title{font-size:13px;font-weight:600}
+.phase-period{font-size:11px;color:var(--muted)}
+.phase-body{font-size:12px;color:var(--muted);line-height:1.8;padding-right:42px}
+.phase-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:.6rem;padding-right:42px}
+.sumbar{background:var(--text);color:#fff;border-radius:12px;padding:.85rem 1rem;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:.85rem;text-align:center}
+.sumbar-label{font-size:9px;opacity:.5;margin-bottom:2px}
+.sumbar-val{font-size:13px;font-weight:600}
+.sec-header{font-size:12px;font-weight:600;color:var(--muted);margin:.85rem 0 .5rem;display:flex;justify-content:space-between;align-items:center}
+.month-card{background:var(--faint);border-radius:10px;padding:.7rem .85rem;margin-bottom:8px}
+.month-card.iqama{background:var(--amber-bg);border:1px solid #FAC775}
+.month-card.recur-only{background:var(--blue-bg);border:1px solid #B5D4F4}
+.month-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem}
+.month-name{font-size:12px;font-weight:600}
+.month-items{display:flex;flex-direction:column;gap:2px}
+.month-item{display:flex;justify-content:space-between;font-size:11px}
+.mi-name{color:var(--muted)}
+.mi-amt{font-weight:500}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="topbar-title">📊 خطة أحمد — 3 سنوات</div>
+    <div class="topbar-sub">أبريل 2026 ← مارس 2029</div>
+  </div>
+  <div id="topbar-remain" style="font-size:13px;font-weight:600"></div>
+</div>
+
+<div class="container">
+
+<!-- DASHBOARD -->
+
+<div id="p-dash" class="page active">
+  <div id="dash-sumbar" class="sumbar"></div>
+  <div class="metrics-2" id="dash-metrics"></div>
+  <div class="card">
+    <div class="card-title">توزيع الراتب</div>
+    <div id="dash-dist"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">نمو المدخرات — 36 شهر</div>
+    <div class="chart-wrap"><canvas id="mainChart"></canvas></div>
+  </div>
+  <div id="dash-alerts"></div>
+</div>
+
+<!-- BUDGET -->
+
+<div id="p-budget" class="page">
+  <div class="alert ai">غيّر أي رقم — التأثير فوري على كل الخطة ↓</div>
+  <div class="card">
+    <div class="card-title">الراتب</div>
+    <div class="inp-row"><span class="iname">الراتب الشهري</span><input class="inp" id="i-income" type="number" inputmode="decimal" value="600" oninput="recalc()"><span class="iresult cg" id="o-income">600</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">ثابتات <span class="tag tgr" id="lbl-fixed"></span></div>
+    <div class="inp-row"><span class="iname">إيجار</span><input class="inp" id="i-rent" type="number" inputmode="decimal" value="190" oninput="recalc()"><span class="iresult" id="o-rent"></span></div>
+    <div class="inp-row"><span class="iname">هاتف شهري</span><input class="inp" id="i-phone1" type="number" inputmode="decimal" value="10" oninput="recalc()"><span class="iresult" id="o-phone1"></span></div>
+    <div class="inp-row"><span class="iname">هاتف / شهرين<span class="isub">يُحسب نصفه شهرياً</span></span><input class="inp" id="i-phone2" type="number" inputmode="decimal" value="8" oninput="recalc()"><span class="iresult" id="o-phone2"></span></div>
+    <div class="inp-row"><span class="iname">بنزين</span><input class="inp" id="i-petrol" type="number" inputmode="decimal" value="15" oninput="recalc()"><span class="iresult" id="o-petrol"></span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">متغيرات <span class="tag ta" id="lbl-var"></span></div>
+    <div class="inp-row"><span class="iname">مقاضي وأكل</span><input class="inp" id="i-food" type="number" inputmode="decimal" value="120" oninput="recalc()"><span class="iresult" id="o-food"></span></div>
+    <div class="inp-row"><span class="iname">صدقة<span class="isub">ثابتة لا تتغير</span></span><input class="inp" id="i-sadaqa" type="number" inputmode="decimal" value="45" oninput="recalc()"><span class="iresult" id="o-sadaqa"></span></div>
+    <div class="inp-row"><span class="iname">ترفيه ومتنوع</span><input class="inp" id="i-misc" type="number" inputmode="decimal" value="20" oninput="recalc()"><span class="iresult" id="o-misc"></span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">أهداف مالية <span class="tag tg" id="lbl-goals"></span></div>
+    <div class="inp-row"><span class="iname">صندوق الطوارئ<span class="isub">أولوية 1</span></span><input class="inp" id="i-emerg" type="number" inputmode="decimal" value="50" oninput="recalc()"><span class="iresult cr" id="o-emerg"></span></div>
+    <div class="inp-row"><span class="iname">ادخار عام<span class="isub">أولوية 2</span></span><input class="inp" id="i-save" type="number" inputmode="decimal" value="40" oninput="recalc()"><span class="iresult cg" id="o-save"></span></div>
+    <div class="inp-row"><span class="iname">استثمار<span class="isub">أولوية 3</span></span><input class="inp" id="i-invest" type="number" inputmode="decimal" value="25" oninput="recalc()"><span class="iresult cb" id="o-invest"></span></div>
+    <div class="inp-row"><span class="iname">تعليم الأطفال</span><input class="inp" id="i-edu" type="number" inputmode="decimal" value="20" oninput="recalc()"><span class="iresult cp" id="o-edu"></span></div>
+    <div class="inp-row"><span class="iname">ادخار سفر<span class="isub">هدف 600/سنة</span></span><input class="inp" id="i-travel" type="number" inputmode="decimal" value="50" oninput="recalc()"><span class="iresult ca" id="o-travel"></span></div>
+    <div class="inp-row"><span class="iname">إقامة الأطفال<span class="isub">500/سنة — مايو/سبتمبر/ديسمبر</span></span><input class="inp" id="i-kids" type="number" inputmode="decimal" value="42" oninput="recalc()"><span class="iresult ca" id="o-kids"></span></div>
+  </div>
+  <div class="card" id="recur-budget-card">
+    <div class="card-title">مدفوعات متكررة <span class="tag ta" id="lbl-recur"></span></div>
+    <div id="recur-budget-list"></div>
+  </div>
+  <div class="card" style="background:var(--faint)">
+    <div class="row"><span style="font-weight:600">إجمالي المصاريف</span><span style="font-weight:600" id="o-total"></span></div>
+    <div class="row"><span style="font-weight:600">المتبقي</span><span style="font-weight:700;font-size:15px" id="o-remain"></span></div>
+  </div>
+  <div id="budget-alert" class="alert"></div>
+</div>
+
+<!-- RECURRING -->
+
+<div id="p-recur" class="page">
+  <div class="alert ai">تتحسب تلقائياً في الميزانية والتقويم</div>
+  <div class="sec-header"><span>المدفوعات الحالية</span><span class="tag tgr" id="recur-total-lbl"></span></div>
+  <div class="card"><div id="recur-list"></div></div>
+  <div class="sec-header">إضافة جديدة</div>
+  <div class="card">
+    <div class="add-grid">
+      <div><span class="inp-label">الاسم</span><input class="inp-full" id="new-name" placeholder="مثال: حضانة" type="text"></div>
+      <div><span class="inp-label">المبلغ (د.ك)</span><input class="inp-full" id="new-amt" placeholder="80" type="number" inputmode="decimal"></div>
+    </div>
+    <div class="add-grid">
+      <div><span class="inp-label">التكرار</span>
+        <select class="inp-full" id="new-freq">
+          <option value="monthly">كل شهر</option>
+          <option value="bimonthly">كل شهرين</option>
+          <option value="quarterly">كل 3 أشهر</option>
+          <option value="yearly">مرة في السنة</option>
+        </select>
+      </div>
+      <div><span class="inp-label">الفئة</span>
+        <select class="inp-full" id="new-cat">
+          <option value="fixed">ثابتات</option>
+          <option value="variable">متغيرات</option>
+          <option value="goals">أهداف</option>
+          <option value="kids">أطفال</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-bottom:4px"><span class="inp-label">ملاحظة (اختياري)</span><input class="inp-full" id="new-note" placeholder="مثال: محتمل من الشهر الجاي" type="text"></div>
+    <button class="btn-add" onclick="addRecur()">+ إضافة</button>
+  </div>
+</div>
+
+<!-- PHASES -->
+
+<div id="p-phases" class="page">
+  <div class="alert ap">كل مرحلة مستقلة — لما تكمل واحدة الأموال تنتقل للتالية</div>
+  <div class="phase" style="border-color:#E24B4A">
+    <div class="phase-head">
+      <div class="phase-num" style="background:#FCEBEB;color:#A32D2D">1</div>
+      <div><div class="phase-title cr">مرحلة الأمان</div><div class="phase-period">أبريل 2026 ← اكتمال الطوارئ</div></div>
+    </div>
+    <div class="phase-body">
+      <b>هدف واحد فقط:</b> إكمال صندوق الطوارئ.<br>
+      عندك 500 د.ك بالفعل — باقي <b id="ph1-remain" class="cr"></b> د.ك.<br>
+      بإضافة <b id="ph1-mo"></b> د.ك/شهر يكتمل في <b id="ph1-date" class="cr"></b>.<br><br>
+      <b>القاعدة الذهبية:</b> الطوارئ لا تُلمس إلا لطارئ حقيقي فقط.
+    </div>
+    <div class="phase-tags" id="ph1-tags"></div>
+  </div>
+  <div class="phase" style="border-color:#BA7517">
+    <div class="phase-head">
+      <div class="phase-num" style="background:#FAEEDA;color:#854F0B">2</div>
+      <div><div class="phase-title ca">مرحلة البناء</div><div class="phase-period">موازية + تسارع بعد الطوارئ</div></div>
+    </div>
+    <div class="phase-body">
+      <b>الآن:</b> ادخار <b id="ph2-save"></b> + استثمار <b id="ph2-invest"></b> د.ك/شهر.<br>
+      <b>بعد الطوارئ:</b> الـ <b id="ph2-emerg"></b> د.ك تنضاف للاستثمار مباشرة.<br><br>
+      الادخار في حساب منفصل — لأهداف مرنة ومستقبل الأسرة.
+    </div>
+    <div class="phase-tags" id="ph2-tags"></div>
+  </div>
+  <div class="phase" style="border-color:#185FA5">
+    <div class="phase-head">
+      <div class="phase-num" style="background:#E6F1FB;color:#185FA5">3</div>
+      <div><div class="phase-title cb">مرحلة المستقبل</div><div class="phase-period">صناديق موازية طوال 3 سنين</div></div>
+    </div>
+    <div class="phase-body">
+      <b>4 صناديق منفصلة لا تختلط أبداً:</b><br>
+      🎒 تعليم: <b id="ph3-edu"></b> د.ك/شهر ← <b id="ph3-edu-t"></b> د.ك / 3 سنين<br>
+      ✈️ سفر: <b id="ph3-tv"></b> د.ك/شهر — لما يوصل 600 تسافر وتبدأ من صفر<br>
+      🏫 إقامة: <b id="ph3-kids"></b> د.ك/شهر (مايو 125 / سبتمبر 250 / ديسمبر 125)<br>
+      🔄 مدفوعات متكررة — تتحسب تلقائياً
+    </div>
+    <div class="phase-tags">
+      <span class="tag tp">تعليم منفصل</span><span class="tag ta">سفر منفصل</span>
+      <span class="tag tb">إقامة منفصلة</span><span class="tag tg">لا يختلط شيء</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">الجدول الزمني</div>
+    <div class="row"><span>أبريل 2026</span><span class="tag tgr">البداية — طوارئ 500 د.ك</span></div>
+    <div class="row" id="tl1"></div>
+    <div class="row" id="tl2"></div>
+    <div class="row"><span>مارس 2029</span><span class="tag tp">نهاية العقد — تجديد تلقائي</span></div>
+  </div>
+</div>
+
+<!-- CALENDAR -->
+
+<div id="p-cal" class="page">
+  <div class="alert aw">الأشهر الملونة فيها مدفوعات إضافية</div>
+  <div id="cal-container"></div>
+</div>
+
+</div>
+
+<div class="bottom-nav">
+  <button class="bnav-item active" onclick="nav('dash',this)"><span class="bnav-icon">🏠</span>رئيسي</button>
+  <button class="bnav-item" onclick="nav('budget',this)"><span class="bnav-icon">💰</span>ميزانية</button>
+  <button class="bnav-item" onclick="nav('recur',this)"><span class="bnav-icon">🔄</span>مدفوعات</button>
+  <button class="bnav-item" onclick="nav('phases',this)"><span class="bnav-icon">🎯</span>المراحل</button>
+  <button class="bnav-item" onclick="nav('cal',this)"><span class="bnav-icon">📅</span>تقويم</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+
+<script>
+const MO=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+const SM=3,SY=2026,ET=1700,ES=500;
+const IQAMA={4:125,8:250,11:125};
+const FL={monthly:'كل شهر',bimonthly:'كل شهرين',quarterly:'كل 3 أشهر',yearly:'سنوياً'};
+const FM={monthly:1,bimonthly:.5,quarterly:.333,yearly:.0833};
+const CL={fixed:'tgr',variable:'ta',goals:'tg',kids:'tp'};
+const CN={fixed:'ثابتات',variable:'متغيرات',goals:'أهداف',kids:'أطفال'};
+let RL=[{id:1,name:'حضانة',amt:80,freq:'monthly',cat:'kids',note:'محتمل من الشهر الجاي',on:true}];
+let MC=null,RID=10;
+
+function g(id){return parseFloat(document.getElementById(id)?.value)||0;}
+function f(n){return (+n).toFixed(3);}
+function fs(n){return Math.round(n).toLocaleString();}
+function da(m){let mo=(SM+m)%12,y=SY+Math.floor((SM+m)/12);return MO[mo]+' '+y;}
+function rm(){return RL.filter(r=>r.on).reduce((s,r)=>s+r.amt*(FM[r.freq]||1),0);}
+
+function nav(p,b){
+  document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.bnav-item').forEach(e=>e.classList.remove('active'));
+  document.getElementById('p-'+p).classList.add('active');
+  b.classList.add('active');
+  if(p==='dash')renderDash();
+  if(p==='recur')renderRecur();
+  if(p==='phases')renderPhases();
+  if(p==='cal')renderCal();
+}
+
+function recalc(){
+  const inc=g('i-income');
+  const fx=g('i-rent')+g('i-phone1')+g('i-phone2')/2+g('i-petrol');
+  const vr=g('i-food')+g('i-sadaqa')+g('i-misc');
+  const gl=g('i-emerg')+g('i-save')+g('i-invest')+g('i-edu')+g('i-travel')+g('i-kids');
+  const rc=rm(); const tot=fx+vr+gl+rc; const rem=inc-tot;
+
+  const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=f(v);};
+  s('o-income',inc);s('o-rent',g('i-rent'));s('o-phone1',g('i-phone1'));
+  s('o-phone2',g('i-phone2')/2);s('o-petrol',g('i-petrol'));
+  s('o-food',g('i-food'));s('o-sadaqa',g('i-sadaqa'));s('o-misc',g('i-misc'));
+  s('o-emerg',g('i-emerg'));s('o-save',g('i-save'));s('o-invest',g('i-invest'));
+  s('o-edu',g('i-edu'));s('o-travel',g('i-travel'));s('o-kids',g('i-kids'));
+  s('o-total',tot);
+
+  const lf=document.getElementById('lbl-fixed');if(lf)lf.textContent=f(fx)+' د.ك';
+  const lv=document.getElementById('lbl-var');if(lv)lv.textContent=f(vr)+' د.ك';
+  const lg=document.getElementById('lbl-goals');if(lg)lg.textContent=f(gl)+' د.ك';
+  const lr=document.getElementById('lbl-recur');if(lr)lr.textContent=f(rc)+' د.ك';
+
+  const re=document.getElementById('o-remain');
+  if(re){re.textContent=f(rem)+' د.ك';re.style.color=rem>=0?'var(--green)':'var(--red)';}
+  const tr=document.getElementById('topbar-remain');
+  if(tr){tr.textContent=(rem>=0?'✓ ':'⚠ ')+f(Math.abs(rem));tr.style.color=rem>=0?'#4ade80':'#f87171';}
+
+  const al=document.getElementById('budget-alert');
+  if(al){
+    if(Math.abs(rem)<.01){al.className='alert ag';al.textContent='✓ الميزانية متوازنة تماماً!';}
+    else if(rem>0){al.className='alert aw';al.textContent='يتبقى '+f(rem)+' د.ك — أضفها للادخار';}
+    else{al.className='alert ar';al.textContent='⚠️ تتجاوز الراتب بـ '+f(Math.abs(rem))+' د.ك';}
+  }
+
+  const rbl=document.getElementById('recur-budget-list');
+  if(rbl){
+    const act=RL.filter(r=>r.on);
+    rbl.innerHTML=act.length===0?'<div class="tip" style="margin:0">لا توجد — أضف من تاب المدفوعات</div>':
+      act.map(r=>`<div class="inp-row"><span class="iname">${r.name}<span class="isub">${FL[r.freq]}${r.note?' — '+r.note:''}</span></span><span class="iresult ca">${f(r.amt*(FM[r.freq]||1))}</span></div>`).join('');
+  }
+  renderDash();
+}
+
+function renderDash(){
+  const inc=g('i-income');
+  const fx=g('i-rent')+g('i-phone1')+g('i-phone2')/2+g('i-petrol');
+  const vr=g('i-food')+g('i-sadaqa')+g('i-misc');
+  const gl=g('i-emerg')+g('i-save')+g('i-invest')+g('i-edu')+g('i-travel')+g('i-kids');
+  const rc=rm(); const tot=fx+vr+gl+rc;
+  const sp=(g('i-save')+g('i-invest'))/inc*100;
+  const em=g('i-emerg'); const emL=ET-ES;
+  const emM=em>0?Math.ceil(emL/em):999;
+  const s36=(g('i-save')+g('i-invest'))*36;
+
+  document.getElementById('dash-sumbar').innerHTML=`
+    <div><div class="sumbar-label">الراتب</div><div class="sumbar-val">${f(inc)}</div></div>
+    <div><div class="sumbar-label">المصاريف</div><div class="sumbar-val">${f(tot)}</div></div>
+    <div><div class="sumbar-label">ادخار+استثمار</div><div class="sumbar-val" style="color:#4ade80">${sp.toFixed(0)}%</div></div>
+    <div><div class="sumbar-label">توفير 3 سنين</div><div class="sumbar-val">${fs(s36)}</div></div>`;
+
+  document.getElementById('dash-metrics').innerHTML=`
+    <div class="metric"><div class="metric-label">صندوق الطوارئ</div><div class="metric-value cr">500 / 1,700</div><div class="metric-sub">يكتمل ${da(emM)}</div></div>
+    <div class="metric"><div class="metric-label">فائض شهري</div><div class="metric-value" style="color:${inc-tot>=0?'var(--green)':'var(--red)'}">${f(inc-tot)}</div><div class="metric-sub">د.ك</div></div>`;
+
+  const items=[
+    {n:'ثابتات',a:fx,c:'#E24B4A'},{n:'مقاضي+صدقة+ترفيه',a:vr,c:'#BA7517'},
+    {n:'مدفوعات متكررة',a:rc,c:'#888'},{n:'طوارئ',a:g('i-emerg'),c:'#E24B4A88'},
+    {n:'ادخار',a:g('i-save'),c:'#1D9E75'},{n:'استثمار',a:g('i-invest'),c:'#378ADD'},
+    {n:'تعليم+سفر+إقامة',a:g('i-edu')+g('i-travel')+g('i-kids'),c:'#7F77DD'},
+  ];
+  document.getElementById('dash-dist').innerHTML=items.filter(i=>i.a>0).map(i=>`
+    <div class="prog">
+      <div class="prog-label"><span>${i.n}</span><span style="color:var(--muted)">${f(i.a)} — ${(i.a/inc*100).toFixed(1)}%</span></div>
+      <div class="prog-bg"><div class="prog-fill" style="width:${Math.min(100,i.a/inc*100*1.5)}%;background:${i.c}"></div></div>
+    </div>`).join('');
+
+  document.getElementById('dash-alerts').innerHTML=`
+    ${sp>=20?`<div class="alert ag">✓ نسبة الادخار ${sp.toFixed(1)}% — ممتاز!</div>`:`<div class="alert aw">⚠️ نسبة الادخار ${sp.toFixed(1)}% — حاول تعديها 20%</div>`}
+    <div class="alert ai">💡 بعد الطوارئ (${da(emM)}) — الـ ${f(em)} د.ك تنضاف للاستثمار 🚀</div>
+    <div class="alert ap">🎯 مارس 2029 — إجمالي مدخراتك: ~${fs(s36+Math.min(ES+em*36,ET))} د.ك</div>`;
+
+  renderChart();
+}
+
+function renderChart(){
+  const lb=[],ed=[],sd=[],id2=[],edd=[];
+  let e=ES,s=0,iv=0,edu=0;
+  const em=g('i-emerg'),sm=g('i-save'),im=g('i-invest'),edm=g('i-edu');
+  for(let m=0;m<=36;m++){
+    const mo=(SM+m)%12;
+    lb.push(m%6===0?MO[mo].substr(0,3)+' '+(SY+Math.floor((SM+m)/12)):'');
+    ed.push(Math.min(Math.round(e),ET));sd.push(Math.round(s));
+    id2.push(Math.round(iv));edd.push(Math.round(edu));
+    if(e<ET)e+=em; s+=sm; iv=iv*(1+.07/12)+im; edu+=edm;
+  }
+  if(MC)MC.destroy();
+  MC=new Chart(document.getElementById('mainChart'),{
+    type:'line',
+    data:{labels:lb,datasets:[
+      {label:'طوارئ',data:ed,borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,.07)',fill:true,tension:.4,borderWidth:2,pointRadius:0},
+      {label:'ادخار',data:sd,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,.07)',fill:true,tension:.4,borderWidth:2,pointRadius:0},
+      {label:'استثمار',data:id2,borderColor:'#378ADD',backgroundColor:'rgba(55,138,221,.07)',fill:true,tension:.4,borderWidth:2,pointRadius:0},
+      {label:'تعليم',data:edd,borderColor:'#7F77DD',backgroundColor:'rgba(127,119,221,.05)',fill:true,tension:.4,borderWidth:2,pointRadius:0},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:8,padding:10}}},
+      scales:{y:{ticks:{font:{size:9},callback:v=>v+' د.ك'},grid:{color:'rgba(0,0,0,.04)'},min:0},x:{ticks:{font:{size:9}},grid:{display:false}}}}
+  });
+}
+
+function addRecur(){
+  const n=document.getElementById('new-name').value.trim();
+  const a=parseFloat(document.getElementById('new-amt').value)||0;
+  const fr=document.getElementById('new-freq').value;
+  const ca=document.getElementById('new-cat').value;
+  const no=document.getElementById('new-note').value.trim();
+  if(!n||!a){alert('أدخل الاسم والمبلغ');return;}
+  RL.push({id:++RID,name:n,amt:a,freq:fr,cat:ca,note:no,on:true});
+  document.getElementById('new-name').value='';
+  document.getElementById('new-amt').value='';
+  document.getElementById('new-note').value='';
+  renderRecur();recalc();
+}
+
+function delR(id){RL=RL.filter(r=>r.id!==id);renderRecur();recalc();}
+function togR(id){const r=RL.find(r=>r.id===id);if(r)r.on=!r.on;renderRecur();recalc();}
+
+function renderRecur(){
+  const tot=rm();
+  const tl=document.getElementById('recur-total-lbl');if(tl)tl.textContent=f(tot)+' د.ك/شهر';
+  const el=document.getElementById('recur-list');if(!el)return;
+  if(RL.length===0){el.innerHTML='<div class="tip" style="margin:0">لا توجد — أضف من الأسفل</div>';return;}
+  el.innerHTML=RL.map(r=>`
+    <div class="recur-item" style="opacity:${r.on?1:.4}">
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">
+          <span style="font-weight:600">${r.name}</span>
+          <span class="tag ${CL[r.cat]||'tgr'}">${CN[r.cat]||r.cat}</span>
+        </div>
+        <span style="font-size:11px;color:var(--muted)">${FL[r.freq]}${r.note?' — '+r.note:''}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <div style="text-align:center">
+          <div style="font-weight:600;color:var(--amber)">${f(r.amt)}</div>
+          <div style="font-size:9px;color:var(--muted)">${f(r.amt*(FM[r.freq]||1))}/شهر</div>
+        </div>
+        <button class="recur-del" onclick="togR(${r.id})">${r.on?'⏸':'▶'}</button>
+        <button class="recur-del" onclick="delR(${r.id})">×</button>
+      </div>
+    </div>`).join('');
+}
+
+function renderPhases(){
+  const em=g('i-emerg'),sm=g('i-save'),im=g('i-invest'),edm=g('i-edu'),tvm=g('i-travel'),km=g('i-kids');
+  const emL=ET-ES; const emM=em>0?Math.ceil(emL/em):999;
+  const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  s('ph1-remain',fs(emL));s('ph1-mo',f(em));s('ph1-date',da(emM));
+  s('ph2-save',f(sm));s('ph2-invest',f(im));s('ph2-emerg',f(em));
+  s('ph3-edu',f(edm));s('ph3-edu-t',fs(edm*36));s('ph3-tv',f(tvm));s('ph3-kids',f(km));
+  const pt=document.getElementById('ph1-tags');
+  if(pt)pt.innerHTML=`<span class="tag tr">باقي: ${fs(emL)} د.ك</span><span class="tag ta">${f(em)} د.ك/شهر</span><span class="tag tgr">~${emM} شهر</span><span class="tag tg">اكتمال: ${da(emM)}</span>`;
+  const pt2=document.getElementById('ph2-tags');
+  if(pt2)pt2.innerHTML=`<span class="tag ta">ادخار: ${f(sm)}/شهر</span><span class="tag tb">استثمار: ${f(im)}/شهر</span><span class="tag tg">بعد الطوارئ: +${f(em)}/شهر</span>`;
+  const t1=document.getElementById('tl1');if(t1)t1.innerHTML=`<span>${da(emM)}</span><span class="tag tg">اكتمال الطوارئ ✓</span>`;
+  const t2=document.getElementById('tl2');if(t2)t2.innerHTML=`<span>${da(emM)}</span><span class="tag ta">الـ ${f(em)} د.ك تنضاف للاستثمار 🚀</span>`;
+}
+
+function renderCal(){
+  const em=g('i-emerg'),sm=g('i-save'),im=g('i-invest'),edm=g('i-edu'),tvm=g('i-travel'),km=g('i-kids');
+  let html='';
+  for(let y=0;y<3;y++){
+    html+=`<div class="sec-header">سنة ${y+1} — ${SY+y}</div>`;
+    for(let m=0;m<12;m++){
+      const absM=y*12+m; const moIdx=(SM+absM)%12;
+      const iq=IQAMA[moIdx]||0;
+      const ar=RL.filter(r=>{
+        if(!r.on)return false;
+        if(r.freq==='monthly')return true;
+        if(r.freq==='bimonthly')return absM%2===0;
+        if(r.freq==='quarterly')return absM%3===0;
+        if(r.freq==='yearly')return absM%12===0;
+      });
+      const cls=iq>0?'iqama':ar.length>0?'recur-only':'';
+      html+=`<div class="month-card ${cls}">
+        <div class="month-head"><span class="month-name">${MO[moIdx]}</span><span style="font-size:10px;color:var(--muted)">${f(em+sm+im+edm+tvm+km)} أهداف</span></div>
+        <div class="month-items">
+          <div class="month-item"><span class="mi-name">طوارئ</span><span class="mi-amt cr">${f(em)}</span></div>
+          <div class="month-item"><span class="mi-name">ادخار</span><span class="mi-amt cg">${f(sm)}</span></div>
+          <div class="month-item"><span class="mi-name">استثمار</span><span class="mi-amt cb">${f(im)}</span></div>
+          <div class="month-item"><span class="mi-name">سفر</span><span class="mi-amt ca">${f(tvm)}</span></div>
+          <div class="month-item"><span class="mi-name">إقامة</span><span class="mi-amt ca">${f(km)}</span></div>
+          ${ar.map(r=>`<div class="month-item"><span class="mi-name">${r.name}</span><span class="mi-amt ca">${f(r.amt)}</span></div>`).join('')}
+          ${iq>0?`<div class="month-item" style="border-top:1px solid #FAC775;padding-top:3px;margin-top:3px"><span class="mi-name" style="color:#854F0B;font-weight:600">دفع إقامة ⚡</span><span class="mi-amt ca">${iq}</span></div>`:''}
+        </div>
+      </div>`;
+    }
+  }
+  document.getElementById('cal-container').innerHTML=html;
+}
+
+recalc();renderRecur();
+</script>
+
+</body>
+</html>
