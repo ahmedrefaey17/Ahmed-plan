@@ -289,7 +289,15 @@ html,body{font-family:-apple-system,system-ui,sans-serif;direction:rtl;backgroun
 #p-ledger .date-sel{width:100%;padding:8px 6px;border:1.5px solid var(–border);border-radius:9px;background:#fff;color:var(–text);font-size:13px;font-family:inherit}
 #p-ledger .ch{position:relative;width:100%;height:180px}
 
+/* SIDEBAR */
+.sidebar-btn{width:100%;text-align:right;padding:.85rem 1rem;border:none;background:none;font-family:inherit;font-size:14px;font-weight:600;color:#181816;cursor:pointer;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f5f4f0}
+.sidebar-btn:active{background:#f5f4f0}
+/* BIGGER NAV */
+.bn{flex:1;display:flex;flex-direction:column;align-items:center;padding:.55rem .05rem;cursor:pointer;color:#999;font-size:9px;gap:2px;border:none;background:none;font-family:inherit}
+.bn.active{color:#1a1a18;font-weight:700}
+.bni{font-size:22px;line-height:1.2}
 </style>
+
 </head>
 <body>
 
@@ -328,10 +336,7 @@ html,body{font-family:-apple-system,system-ui,sans-serif;direction:rtl;backgroun
     <div class="ct">🎯 الأهداف <span class="tag tb" id="d-goals-lbl"></span></div>
     <div id="d-goals-list"></div>
   </div>
-  <div class="card dash-link" onclick="navTo('budget')">
-    <div class="ct">💰 الميزانية <span class="tag ta" id="d-bud-lbl"></span></div>
-    <div id="d-bud-summary"></div>
-  </div>
+
   <div class="card dash-link" onclick="navTo('phases')">
     <div class="ct">🗺️ المراحل <span class="tag tp">3 سنوات</span></div>
     <div id="d-phase-summary"></div>
@@ -405,41 +410,6 @@ html,body{font-family:-apple-system,system-ui,sans-serif;direction:rtl;backgroun
   <div class="g2" id="goals-met"></div>
   <div id="goals-list"></div>
   <button class="badd" onclick="openM('add-goal')">+ إضافة هدف</button>
-</div>
-
-<!-- BUDGET -->
-
-<div id="p-budget" class="page">
-  <button class="back-btn" onclick="navTo('dash')">🏠 الرئيسية</button>
-  <div class="sec-hd">💰 الميزانية الشهرية</div>
-  <div class="card" style="background:#fff;margin-bottom:.7rem">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
-      <button onclick="prevMonth()" style="width:38px;height:38px;border-radius:50%;border:1.5px solid #d0cec8;background:#f8f7f4;font-size:20px;cursor:pointer">‹</button>
-      <div style="text-align:center;flex:1">
-        <div style="font-size:17px;font-weight:700;color:#181816" id="cur-month-lbl">—</div>
-        <div style="font-size:11px;color:#666;margin-top:2px" id="cur-month-stats"></div>
-      </div>
-      <button onclick="nextMonth()" style="width:38px;height:38px;border-radius:50%;border:1.5px solid #d0cec8;background:#f8f7f4;font-size:20px;cursor:pointer">›</button>
-    </div>
-    <div id="month-pills" style="display:flex;gap:6px;overflow-x:auto;padding-top:.6rem;padding-bottom:2px;scrollbar-width:none"></div>
-  </div>
-  <div class="card" style="background:var(--faint)">
-    <div class="row">
-      <span style="font-weight:700;font-size:14px">الراتب الشهري</span>
-      <div style="display:flex;align-items:center;gap:8px">
-        <input class="bud-inp" id="i-income" type="number" inputmode="decimal" value="600" oninput="recalcBud()" style="width:90px">
-        <span style="font-weight:700;font-size:13px" id="o-income">600.000 د.ك</span>
-      </div>
-    </div>
-  </div>
-  <div id="bud-sections"></div>
-  <div class="card" style="background:var(--faint)">
-    <div class="row"><span style="font-weight:700">إجمالي المصاريف</span><span style="font-weight:700" id="o-tot"></span></div>
-    <div class="row"><span style="font-weight:700">المتبقي</span><span style="font-weight:800;font-size:16px" id="o-rem"></span></div>
-    <div class="row"><span style="font-weight:600;color:#555">المدفوع هذا الشهر</span><span style="font-weight:700;color:#1D9E75" id="o-paid-total">0.000 د.ك</span></div>
-  </div>
-  <div id="bud-alert" class="alert" style="margin-top:.5rem"></div>
-  <button class="badd" onclick="openM('add-bud')">+ إضافة بند</button>
 </div>
 
 <!-- PHASES -->
@@ -800,9 +770,33 @@ html,body{font-family:-apple-system,system-ui,sans-serif;direction:rtl;backgroun
   <button class="bn" onclick="navTo('bank')"><span class="bni">🏦</span>البنك</button>
   <button class="bn" onclick="navTo('inv')"><span class="bni">📈</span>استثمار</button>
   <button class="bn" onclick="navTo('ledger')"><span class="bni">📒</span>السجل</button>
-  <button class="bn" onclick="navTo('budget')"><span class="bni">💰</span>ميزانية</button>
   <button class="bn" onclick="navTo('goals')"><span class="bni">🎯</span>أهداف</button>
+  <button class="bn" onclick="openSidebar()"><span class="bni">☰</span>المزيد</button>
 </div>
+</div>
+
+<!-- SIDEBAR MENU -->
+
+<div id="sidebar-overlay" onclick="closeSidebar()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400"></div>
+<div id="sidebar" style="position:fixed;right:-280px;top:0;bottom:0;width:280px;background:#fff;z-index:500;transition:right .3s;overflow-y:auto;padding-bottom:env(safe-area-inset-bottom,16px);box-shadow:-4px 0 20px rgba(0,0,0,.15)">
+  <div style="background:#1a1a18;color:#fff;padding:1.2rem 1rem;display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <div style="font-size:16px;font-weight:700">💼 محفظتي</div>
+      <div style="font-size:10px;opacity:.5;margin-top:2px">القائمة الرئيسية</div>
+    </div>
+    <button onclick="closeSidebar()" style="background:rgba(255,255,255,.1);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer">×</button>
+  </div>
+  <div style="padding:.5rem 0">
+    <div style="font-size:10px;font-weight:700;color:#999;padding:.6rem 1rem .3rem;text-transform:uppercase;letter-spacing:.06em">الرئيسية</div>
+    <button onclick="navTo('dash');closeSidebar()" class="sidebar-btn">🏠 الرئيسية</button>
+    <button onclick="navTo('bank');closeSidebar()" class="sidebar-btn">🏦 البنك</button>
+    <button onclick="navTo('inv');closeSidebar()" class="sidebar-btn">📈 الاستثمار</button>
+    <button onclick="navTo('ledger');closeSidebar()" class="sidebar-btn">📒 السجل الشهري</button>
+    <button onclick="navTo('goals');closeSidebar()" class="sidebar-btn">🎯 الأهداف</button>
+    <div style="font-size:10px;font-weight:700;color:#999;padding:.6rem 1rem .3rem;text-transform:uppercase;letter-spacing:.06em;margin-top:.5rem;border-top:1px solid #f0efe9">خطة FIRE</div>
+    <button onclick="navTo('phases');closeSidebar()" class="sidebar-btn">🗺️ المراحل الثلاث</button>
+    <button onclick="navTo('cal');closeSidebar()" class="sidebar-btn">📅 التقويم الشهري</button>
+  </div>
 </div>
 
 <!-- MODALS -->
@@ -1068,7 +1062,7 @@ function navTo(p){
   document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
   document.querySelectorAll('.bn').forEach(e=>e.classList.remove('active'));
   document.getElementById('p-'+p).classList.add('active');
-  const map={dash:0,bank:1,inv:2,ledger:3,budget:4,goals:5};
+  const map={dash:0,bank:1,inv:2,ledger:3,goals:4};
   if(map[p]!==undefined)document.querySelectorAll('.bn')[map[p]].classList.add('active');
   if(p==='dash')renderDash();
   if(p==='bank'){renderBankTabs();renderBank();}
@@ -1528,141 +1522,6 @@ function updateBudTotals(){
     else{al.className='alert ar';al.textContent='⚠️ تتجاوز الراتب بـ '+f3(Math.abs(rem))+' د.ك';}
   }
   const paidCount=buds.filter(b=>b.paid).length;
-  const paidAmt2=buds.filter(b=>b.paid).reduce((s,b)=>s+b.amt,0);
-  const remAfterPaid2=inc-paidAmt2;
-  const tb=document.getElementById('tb-right');
-  if(tb)tb.innerHTML=`<span style="font-size:9px;opacity:.6">متبقي من الراتب</span><br><span style="color:${remAfterPaid2>=0?'#4ade80':'#f87171'};font-size:13px;font-weight:700">${f3(remAfterPaid2)} د.ك</span>`;
-}
-function recalcBud(){document.getElementById('o-income').textContent=f3(getIncome())+' د.ك';updateBudTotals();recalcPaidRemaining();}
-function addBud(){
-  const name=document.getElementById('nb-name').value.trim();
-  const amt=+document.getElementById('nb-amt').value||0;
-  const type=document.getElementById('nb-type').value;
-  const note=document.getElementById('nb-note').value.trim();
-  if(!name){alert('أدخل الاسم');return;}
-  buds.push({id:++idC.bud,name,amt,type,note,paid:false});SS('v5-buds',buds);
-  closeM('add-bud');document.getElementById('nb-name').value='';document.getElementById('nb-amt').value='';document.getElementById('nb-note').value='';
-  renderBud();
-}
-function openEditBud(id){
-  const b=buds.find(b=>b.id===id);if(!b)return;
-  document.getElementById('eb-id').value=id;document.getElementById('eb-name').value=b.name;
-  document.getElementById('eb-amt').value=b.amt;document.getElementById('eb-type').value=b.type;
-  document.getElementById('eb-note').value=b.note||'';openM('edit-bud');
-}
-function saveEditBud(){
-  const id=+document.getElementById('eb-id').value;const b=buds.find(b=>b.id===id);
-  if(b){b.name=document.getElementById('eb-name').value.trim()||b.name;b.amt=+document.getElementById('eb-amt').value||0;b.type=document.getElementById('eb-type').value;b.note=document.getElementById('eb-note').value.trim();SS('v5-buds',buds);}
-  closeM('edit-bud');renderBud();
-}
-function delBud(id){
-  if(!confirm('حذف البند؟'))return;
-  buds=buds.filter(b=>b.id!==id);SS('v5-buds',buds);renderBud();
-}
-
-// PHASES
-function renderPhases(){
-  const em=buds.find(b=>b.name==='صندوق الطوارئ')?.amt||50;
-  const sv=buds.find(b=>b.name==='ادخار عام')?.amt||40;
-  const iv=buds.find(b=>b.name==='استثمار')?.amt||25;
-  const edm=buds.find(b=>b.name==='تعليم الأطفال')?.amt||20;
-  const tvm=buds.find(b=>b.name==='ادخار سفر')?.amt||50;
-  const km=buds.find(b=>b.name==='إقامة الأطفال')?.amt||42;
-  const emL=1200;const emM=em>0?Math.ceil(emL/em):999;
-  const s=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
-  s('ph1-rem',fE(emL));s('ph1-mo',f3(em));s('ph1-dt',da(emM));
-  s('ph2-sv',f3(sv));s('ph2-iv',f3(iv));s('ph2-em',f3(em));
-  s('ph3-edu',f3(edm));s('ph3-tv',f3(tvm));s('ph3-kids',f3(km));
-  const pt=document.getElementById('ph1-tags');
-  if(pt)pt.innerHTML=`<span class="tag tr">باقي: 1,200 د.ك</span><span class="tag ta">${f3(em)}/شهر</span><span class="tag tgr">~${emM} شهر</span><span class="tag tg">اكتمال: ${da(emM)}</span>`;
-  const pt2=document.getElementById('ph2-tags');
-  if(pt2)pt2.innerHTML=`<span class="tag ta">ادخار: ${f3(sv)}/شهر</span><span class="tag tb">استثمار: ${f3(iv)}/شهر</span><span class="tag tg">بعد الطوارئ: +${f3(em)}/شهر</span>`;
-  const t1=document.getElementById('tl1');if(t1)t1.innerHTML=`<span>${da(emM)}</span><span class="tag tg">اكتمال الطوارئ ✓</span>`;
-  const t2=document.getElementById('tl2');if(t2)t2.innerHTML=`<span>${da(emM)}</span><span class="tag ta">الـ ${f3(em)} د.ك تنضاف للاستثمار 🚀</span>`;
-}
-
-// CALENDAR
-function renderCal(){
-  const em=buds.find(b=>b.name==='صندوق الطوارئ')?.amt||50;
-  const sv=buds.find(b=>b.name==='ادخار عام')?.amt||40;
-  const iv=buds.find(b=>b.name==='استثمار')?.amt||25;
-  const edm=buds.find(b=>b.name==='تعليم الأطفال')?.amt||20;
-  const tvm=buds.find(b=>b.name==='ادخار سفر')?.amt||50;
-  const km=buds.find(b=>b.name==='إقامة الأطفال')?.amt||42;
-  let html='';
-  for(let y=0;y<3;y++){
-    html+=`<div style="font-size:12px;font-weight:700;color:var(--muted);margin:.7rem 0 .5rem;text-transform:uppercase;letter-spacing:.05em">سنة ${y+1} — ${2026+y}</div>`;
-    for(let m=0;m<12;m++){
-      const absM=y*12+m;const moIdx=(3+absM)%12;const iq=IQAMA[moIdx]||0;
-      html+=`<div class="mo-card ${iq>0?'iq':''}">
-        <div class="mo-hd"><span class="mo-nm">${MO[moIdx]}</span><span style="font-size:10px;color:var(--muted);font-weight:600">${f3(em+sv+iv+edm+tvm+km)} د.ك أهداف</span></div>
-        <div style="display:flex;flex-direction:column;gap:2px">
-          <div class="mi"><span class="mi-n">طوارئ</span><span style="color:var(--red);font-weight:600">${f3(em)}</span></div>
-          <div class="mi"><span class="mi-n">ادخار</span><span style="color:var(--green);font-weight:600">${f3(sv)}</span></div>
-          <div class="mi"><span class="mi-n">استثمار</span><span style="color:var(--blue);font-weight:600">${f3(iv)}</span></div>
-          <div class="mi"><span class="mi-n">سفر</span><span style="color:var(--amber);font-weight:600">${f3(tvm)}</span></div>
-          <div class="mi"><span class="mi-n">إقامة (ادخار)</span><span style="color:var(--amber);font-weight:600">${f3(km)}</span></div>
-          ${iq>0?`<div class="mi" style="border-top:2px solid #F5B84A;padding-top:3px;margin-top:3px"><span style="color:var(--adk);font-weight:700">⚡ دفع إقامة</span><span style="color:var(--amber);font-weight:700">${iq} د.ك</span></div>`:''}
-        </div>
-      </div>`;
-    }
-  }
-  document.getElementById('cal-container').innerHTML=html;
-}
-
-// DASHBOARD
-function renderDash(){
-  const tCost=apps.reduce((s,a)=>s+a.funds.filter(f=>!f.sold).reduce((ss,f)=>ss+f.cost,0),0);
-  const tVal=apps.reduce((s,a)=>s+a.funds.filter(f=>!f.sold).reduce((ss,f)=>ss+f.val,0),0);
-  const pnl=tVal-tCost;const pct=tCost>0?pnl/tCost*100:0;
-  const inc=getIncome();const tot=getBudTotal();const rem=inc-tot;
-  const kwdBal=banks.filter(b=>b.currency==='KWD').reduce((s,b)=>s+getBankBal(b.id),0);
-  const totalSaved=goals.reduce((s,g)=>s+g.current,0);
-  const gDone=goals.filter(g=>g.current>=g.target).length;
-  const em=buds.find(b=>b.name==='صندوق الطوارئ')?.amt||50;
-
-  document.getElementById('h-inv').textContent=fE(tVal)+' ج.م';
-  document.getElementById('h-row').innerHTML=`
-    <div class="hi"><div class="hil">ربح الاستثمار</div><div class="hiv" style="color:${pnl>=0?'#4ade80':'#f87171'}">${fE(pnl)} (${pct.toFixed(0)}%)</div></div>
-    <div class="hi"><div class="hil">بنك كويت</div><div class="hiv">${f3(kwdBal)} د.ك</div></div>
-    <div class="hi"><div class="hil">فائض شهري</div><div class="hiv" style="color:${rem>=0?'#4ade80':'#f87171'}">${f3(rem)}</div></div>
-    <div class="hi"><div class="hil">أهداف مكتملة</div><div class="hiv">${gDone}/${goals.length}</div></div>`;
-
-  // BIG SAVINGS
-  document.getElementById('dash-savings-val').textContent=f3(totalSaved)+' د.ك';
-  const goalsBreakdown=goals.map(g=>`${g.emoji} ${g.name}: ${f3(g.current)}`).join(' · ');
-  document.getElementById('dash-savings-sub').textContent=goalsBreakdown;
-
-  document.getElementById('dash-g4').innerHTML=`
-    <div class="met"><div class="ml">مستثمر ج.م</div><div class="mv" style="font-size:12px">${fE(tCost)}</div></div>
-    <div class="met"><div class="ml">محفظة مبيعات</div><div class="mv cg" style="font-size:12px">${fEf(wallet)}</div></div>
-    <div class="met"><div class="ml">بنك د.ك</div><div class="mv" style="font-size:12px">${f3(kwdBal)}</div></div>
-    <div class="met"><div class="ml">مدفوع</div><div class="mv" style="font-size:12px">${buds.filter(b=>b.paid).length}/${buds.length}</div></div>`;
-
-  document.getElementById('d-inv-pnl').textContent=pct.toFixed(1)+'% ربح';
-  document.getElementById('d-inv-list').innerHTML=apps.map(a=>{
-    const aC=a.funds.filter(f=>!f.sold).reduce((s,f)=>s+f.cost,0);
-    const aV=a.funds.filter(f=>!f.sold).reduce((s,f)=>s+f.val,0);
-    const ap=aC>0?(aV-aC)/aC*100:0;
-    return `<div class="row"><span style="font-weight:600">${a.name}<br><span style="font-size:10px;color:var(--muted);font-weight:400">${a.funds.filter(f=>!f.sold).length} صندوق · ${fE(aV)} ج.م</span></span><span class="${ap>=0?'cg':'cr'}" style="font-weight:700;font-size:14px">${ap>=0?'+':''}${ap.toFixed(1)}%</span></div>`;
-  }).join('');
-
-  document.getElementById('d-goals-lbl').textContent=gDone+'/'+goals.length+' مكتمل';
-  document.getElementById('d-goals-list').innerHTML=goals.slice(0,4).map(g=>{
-    const p=Math.min(100,Math.round(g.current/g.target*100));
-    return `<div class="prog"><div class="plbl"><span>${g.emoji} ${g.name}</span><span style="color:var(--muted)">${p}% · ${f3(g.current)} د.ك</span></div><div class="pbg"><div class="pf" style="width:${p}%;background:${p>=100?'var(--green)':p>=50?'var(--blue)':'var(--amber)'}"></div></div></div>`;
-  }).join('');
-
-  const paidCount=buds.filter(b=>b.paid).length;
-  const basicT=buds.filter(b=>b.type==='basic').reduce((s,b)=>s+b.amt,0);
-  const extraT=buds.filter(b=>b.type==='extra').reduce((s,b)=>s+b.amt,0);
-  const goalsT=buds.filter(b=>b.type==='goals').reduce((s,b)=>s+b.amt,0);
-  document.getElementById('d-bud-lbl').textContent=paidCount+'/'+buds.length+' مدفوع';
-  document.getElementById('d-bud-summary').innerHTML=`
-    <div class="row"><span style="font-weight:600">أساسيات</span><span style="font-weight:700;color:var(--gdk)">${f3(basicT)} د.ك</span></div>
-    <div class="row"><span style="font-weight:600">متغيرات</span><span style="font-weight:700;color:var(--adk)">${f3(extraT)} د.ك</span></div>
-    <div class="row"><span style="font-weight:600">أهداف</span><span style="font-weight:700;color:var(--bdk)">${f3(goalsT)} د.ك</span></div>
-    <div class="row"><span style="font-weight:700;font-size:14px">المتبقي</span><span style="font-weight:800;font-size:15px;color:${rem>=0?'var(--green)':'var(--red)'}">${f3(rem)} د.ك</span></div>`;
 
   const emM=em>0?Math.ceil(1200/em):999;
   const emG=goals.find(g=>g.name==='صندوق الطوارئ');
@@ -1671,7 +1530,6 @@ function renderDash(){
     <div class="prog"><div class="plbl"><span>🛡️ صندوق الطوارئ</span><span style="color:var(--muted)">${emPct}%</span></div><div class="pbg"><div class="pf" style="width:${emPct}%;background:var(--red)"></div></div></div>
     <div class="tip" style="margin-top:4px;font-size:11px">يكتمل في ~${emM} شهر · ${da(emM)}</div>`;
 
-  updateBudTotals();
   renderMainChart();
 }
 
@@ -2537,6 +2395,18 @@ function lRender(){
 }
 
 // lRender called by navTo
+
+
+function openSidebar(){
+  document.getElementById('sidebar').style.right='0';
+  document.getElementById('sidebar-overlay').style.display='block';
+  document.body.style.overflow='hidden';
+}
+function closeSidebar(){
+  document.getElementById('sidebar').style.right='-280px';
+  document.getElementById('sidebar-overlay').style.display='none';
+  document.body.style.overflow='';
+}
 
 // INIT
 renderDash();renderBankTabs();
